@@ -1,13 +1,39 @@
+# Statische Configuratie Traefik
+
 global:
-  checkNewVersion: false
+  checkNewVersion: true
   sendAnonymousUsage: false
+
 log:
-  level: DEBUG
+  level: INFO # **Dit doet** het niveau van de logberichten instellen.
+
 api:
   dashboard: true
-  insecure: true
+  insecure: false # Gebruik een router in routers.yml om het dashboard te beveiligen
+
 entryPoints:
-  web:
+  http:
     address: ":80"
-  websecure:
+    http:
+      redirections:
+        entryPoint:
+          to: "https"
+          scheme: "https"
+          permanent: true # **Dit doet** al het HTTP-verkeer permanent omleiden naar HTTPS (beste praktijk).
+  https:
     address: ":443"
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        # Dit is het pad BINNEN de container waar het certificaat te vinden is.
+        # **Dit doet** het certificaat als de standaard (fallback) optie instellen.
+        certFile: "/certs/live/dinandos.duckdns.org/fullchain.pem"
+        keyFile: "/certs/live/dinandos.duckdns.org/privkey.pem"
+
+providers:
+  file:
+    # Pad BINNEN de container, waar de dynamische configuratiebestanden staan.
+    directory: /etc/traefik/dynamic 
+    watch: true # **Dit doet** Traefik de configuratie automatisch herladen bij wijzigingen.

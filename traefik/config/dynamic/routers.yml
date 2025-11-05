@@ -1,0 +1,16 @@
+# Dynamische Configuratie Traefik - Routers en Services
+
+http:
+  routers:
+    whoami-secure:
+      rule: "Host(`whoami.dinandserver.duckdns.org`)"
+      entryPoints:
+      - https
+      service: whoami-service
+      tls: true
+
+  services:
+    whoami-service:
+      loadBalancer:
+        servers:
+        - url: "http://192.168.178.240:81" # Gebruik de containernaam
