@@ -24,20 +24,17 @@ Gebruik de volgende command-reeks in je Linux machine. Dit vervangt `wget` door 
 > **⚠️ Let op:** Vervang `JOUW_PAT` door de daadwerkelijke token die je hebt aangemaakt.
 
 ```bash
-# 1. Stel de variabele in. Vervang JOUW_PAT door je daadwerkelijke token!
+# 1. Zorg ervoor dat de variabele goed is ingesteld in dezelfde sessie
 PAT="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" 
 
-# 2. De correcte API-URL voor de content van het script
-API_URL="https://api.github.com/repos/Dinandos/dinandserver-big-homelab/contents/scripts/script.sh?ref=main"
-
-# 3. Download met wget, gebruik PAT voor authenticatie en accept-header
+# 2. De complete, correcte wget opdracht
 wget --header='Accept: application/vnd.github.v3.raw' \
      --user="$PAT" \
      --password="" \
-     "$API_URL" \
+     "https://api.github.com/repos/Dinandos/dinandserver-big-homelab/contents/scripts/script.sh?ref=main" \
      -O script.sh
 
-# 4. Maak het uitvoerbaar en voer het uit
+# 3. Maak het uitvoerbaar en voer het uit
 chmod +x ./script.sh && ./script.sh
 ```
 
