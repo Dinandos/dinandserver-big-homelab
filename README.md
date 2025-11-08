@@ -24,18 +24,20 @@ Gebruik de volgende command-reeks in je Linux machine. Dit vervangt `wget` door 
 > **⚠️ Let op:** Vervang `JOUW_PAT` door de daadwerkelijke token die je hebt aangemaakt.
 
 ```bash
-# 1. Stel de variabele in (vervang JOUW_PAT)
+# 1. Stel de variabele in. Vervang JOUW_PAT door je daadwerkelijke token!
 PAT="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" 
 
-# 2. Definieer de URL van het raw script
-# (Controleer of de ref en path correct zijn voor dit script)
-RAW_URL="[https://raw.githubusercontent.com/Dinandos/dinandserver-big-homelab/refs/heads/main/scripts/script.sh](https://raw.githubusercontent.com/Dinandos/dinandserver-big-homelab/refs/heads/main/scripts/script.sh)"
+# 2. De correcte API-URL voor de content van het script
+API_URL="https://api.github.com/repos/Dinandos/dinandserver-big-homelab/contents/scripts/script.sh?ref=main"
 
-# 3. Download het script met curl en authenticatie
-# -L volgt redirects, -H voegt de authenticatieheader toe, -o slaat op als script.sh
-curl -L -H "Authorization: token $PAT" $RAW_URL -o script.sh
+# 3. Download met wget, gebruik PAT voor authenticatie en accept-header
+wget --header='Accept: application/vnd.github.v3.raw' \
+     --user="$PAT" \
+     --password="" \
+     "$API_URL" \
+     -O script.sh
 
-# 4. Maak het uitvoerbaar en start het script
+# 4. Maak het uitvoerbaar en voer het uit
 chmod +x ./script.sh && ./script.sh
 ```
 
