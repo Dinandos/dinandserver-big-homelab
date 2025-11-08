@@ -24,18 +24,19 @@ Gebruik de volgende command-reeks in je Linux machine. Dit vervangt `wget` door 
 > **⚠️ Let op:** Vervang `JOUW_PAT` door de daadwerkelijke token die je hebt aangemaakt.
 
 ```bash
-# 1. Zorg ervoor dat de variabele goed is ingesteld in dezelfde sessie
+# 1. Stel de variabele in. Vervang JOUW_PAT door je daadwerkelijke token!
 PAT="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" 
 
 # 2. De directe RAW URL naar het script op de main branch
 RAW_URL="https://raw.githubusercontent.com/Dinandos/dinandserver-big-homelab/main/scripts/script.sh"
 
-# 3. Download het bestand met wget en Bearer authenticatie
-# --header: Stelt de Authorization header in met de Bearer token
-# -O: Slaat het bestand op als script.sh
-wget --header="Authorization: Bearer $PAT" \
-     -O script.sh \
-     "$RAW_URL" 
+# 3. Download het bestand met curl en Bearer authenticatie
+# -L: Volg eventuele redirects (belangrijk voor raw.githubusercontent)
+# -H: Stelt de Authorization header in met de Bearer token
+# -o: Slaat het bestand op als script.sh
+curl -L -H "Authorization: Bearer $PAT" \
+     "$RAW_URL" \
+     -o script.sh
 
 # 4. Maak het uitvoerbaar en voer het uit
 chmod +x ./script.sh && ./script.sh
