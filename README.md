@@ -27,14 +27,17 @@ Gebruik de volgende command-reeks in je Linux machine. Dit vervangt `wget` door 
 # 1. Zorg ervoor dat de variabele goed is ingesteld in dezelfde sessie
 PAT="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" 
 
-# 2. De complete, correcte wget opdracht
-wget --header='Accept: application/vnd.github.v3.raw' \
-     --user="$PAT" \
-     --password="" \
-     "https://api.github.com/repos/Dinandos/dinandserver-big-homelab/contents/scripts/script.sh?ref=main" \
-     -O script.sh
+# 2. De directe RAW URL naar het script op de main branch
+RAW_URL="https://raw.githubusercontent.com/Dinandos/dinandserver-big-homelab/main/scripts/script.sh"
 
-# 3. Maak het uitvoerbaar en voer het uit
+# 3. Download het bestand met wget en Bearer authenticatie
+# --header: Stelt de Authorization header in met de Bearer token
+# -O: Slaat het bestand op als script.sh
+wget --header="Authorization: Bearer $PAT" \
+     -O script.sh \
+     "$RAW_URL" 
+
+# 4. Maak het uitvoerbaar en voer het uit
 chmod +x ./script.sh && ./script.sh
 ```
 
