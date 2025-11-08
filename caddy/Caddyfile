@@ -1,0 +1,9 @@
+{
+    email dinand.tv123@gmail.com
+}
+
+proxy.dinandserver.duckdns.org {
+
+    reverse_proxy 192.168.178.240:81
+
+}
