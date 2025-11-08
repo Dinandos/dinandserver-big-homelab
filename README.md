@@ -25,7 +25,7 @@ Gebruik de volgende command-reeks in je Linux machine. Dit vervangt `wget` door 
 
 ```bash
 # 1. Stel de variabele in (vervang JOUW_PAT)
-PAT="JOUW_PAT" 
+PAT="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" 
 
 # 2. Definieer de URL van het raw script
 # (Controleer of de ref en path correct zijn voor dit script)
@@ -37,8 +37,9 @@ curl -L -H "Authorization: token $PAT" $RAW_URL -o script.sh
 
 # 4. Maak het uitvoerbaar en start het script
 chmod +x ./script.sh && ./script.sh
+```
 
-
+---
 # Old versions
 ## One-Commandline (all)
 `wget -L https://raw.githubusercontent.com/Dinandos/dinandserver-big-homelab/refs/heads/main/scripts/script.sh && chmod +x ./script.sh && ./script.sh`
