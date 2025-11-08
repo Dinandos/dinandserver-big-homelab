@@ -1,13 +1,12 @@
 services:
-    caddy:
-        image: caddy:latest
-        container_name: caddy
-        restart: unless-stopped
-        ports:
-        - "80:80"
-        - "443:443"
-        volumes:
-        - ./Caddyfile:/etc/caddy/Caddyfile
-        - /root/caddy/data:/data
-        - /root/caddy/config:/config
-        - /var/run/docker.sock:/var/run/docker.sock:ro
+  caddy:
+    image: caddy
+    container_name: caddy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./data:/data
+      - ./config:/config
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
