@@ -1,7 +1,5 @@
 #!/bin/bash
 
-START_TIME=$SECONDS
-
 # Update package index
 apt-get update
 
@@ -58,14 +56,6 @@ echo -e "${BLUE}- Systeem bijgewerkt (apt-get update)"
 echo -e "- Benodigde pakketten geïnstalleerd: ca-certificates, curl, gnupg, lsb-release"
 echo -e "- Docker repository toegevoegd en Docker geïnstalleerd"
 echo -e "- SSH ingeschakeld en root login met wachtwoord toegestaan"
-echo -e "- Nala geïnstalleerd (verbeterde apt front-end)"
-echo -e "- Neofetch geïnstalleerd via nala"
 echo -e "- Systeem opgeschoond en geschiedenis gewist${RESET}"
 
-echo "Je kunt nu Docker, SSH, Nala en Neofetch gebruiken."
-# Calculate total execution time
-END_TIME=$SECONDS
-DURATION=$((END_TIME - START_TIME))
-
-# Notify ntfy server that the script is complete, including duration
-curl -H "Title: Script Voltooid" -d "Script is voltooid op $(hostname) in ${DURATION} seconden." https://ntfy.dinandserver.duckdns.org/phone
+echo "Je kunt nu Docker en SSH gebruiken."
