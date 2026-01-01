@@ -49,6 +49,7 @@
     @media host media.dinandserver.duckdns.org
     @codeserver host codeserver.dinandos.duckdns.org
     @seafile host cloud.dinandserver.duckdns.org
+    @authentik host authentik.dinandserver.duckdns.org
 
     # --- HANDLERS --- #
     handle @media {
@@ -61,6 +62,7 @@
 
     handle @codeserver { reverse_proxy 192.168.178.100:8680 }
     handle @seafile { reverse_proxy 192.168.178.100:8082 }
+    handle @authentik { reverse_proxy 192.168.178.100:9000 }
 
     # --- Bij een fout subdomein --- #
     handle {
