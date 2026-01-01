@@ -1,17 +1,18 @@
 services:
   caddy:
     build: .
-    container_name: caddy
+    container_name: caddy-full
     restart: unless-stopped
     env_file: ".env"
     environment:
       - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
     ports:
-      - "80:80"
-      - "443:443"
-      - "25565:25565"
-      - "19132:19132/udp"
-      - "24454:24454/udp"
+      - "80:80"           # HTTP
+      - "443:443"         # HTTPS
+      - "443:443/udp"     # HTTPS 3
+      - "25565:25565"     # Java MC Server
+      - "19132:19132/udp" # Bedrock MC Server
+      - "24454:24454/udp" # Voice chat MC Server
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./data:/data

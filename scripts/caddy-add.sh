@@ -12,5 +12,5 @@ MATCHER="    @$sub host $sub.dinandserver.duckdns.org\n    handle @$sub {\n     
 # Invoegen voor de laatste 'handle {' regel
 sed -i "/handle {/i $MATCHER" "$CADDY_FILE"
 
-docker exec caddy caddy reload
+docker exec caddy-full caddy reload
 echo "Klaar! $sub.dinandserver.duckdns.org is nu actief."

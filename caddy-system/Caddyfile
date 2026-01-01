@@ -1,64 +1,68 @@
 {
-    # Layer 4: Minecraft & VoiceChat
     layer4 {
+
+        # --- Minecraft server --- #
         :25565 {
             route {
-                matcher { sni mc.dinandos.duckdns.org }
-                proxy { upstream 192.168.178.100:25565 }
+                matcher { sni java.dinandos.duckdns.org }
+                proxy { upstream smp-s2:25565 }
+            }
+        }
+        :19132 {
+            route {
+                matcher { sni bedrock.dinandos.duckdns.org}
+                proxy { upstream smp-s2:19132 }
             }
         }
         :24454 {
-            route { proxy { upstream 192.168.178.100:24454 } }
+            route { proxy { upstream smp-s2:24454 } }
         }
-        :19132 {
-            route { proxy { upstream 192.168.178.100:19132 } }
+
+        # --- SSH --- #
+        :2222 {
+            route { proxy { upstream 127.0.0.1:22 } }
         }
     }
 
     log default {
-        output file /var/log/caddy/access.log
+        output file /opt/caddy-system/logs/access.log
         format console
         level INFO
     }
 }
 
-# HET WILDCARD BLOK
 *.dinandserver.duckdns.org {
     tls {
         dns duckdns {env.DUCKDNS_TOKEN}
     }
 
-    # MATCHERS voor de subdomeinen
+    @is_intern remote_ip 192.168.178.0/24 127.0.0.1 ::1
+    
+    route {
+        @is_extern not remote_ip 192.168.178.0/24
+        basic_auth @is_extern {
+            dinandos JOUW_GEHASHDE_WACHTWOORD_HIER
+        }
+    }
+
+    # --- MATCHERS --- #
     @media host media.dinandserver.duckdns.org
     @codeserver host codeserver.dinandos.duckdns.org
+    @seafile host cloud.dinandserver.duckdns.org
 
-    # HANDLERS voor de subdomeinen
+    # --- HANDLERS --- #
     handle @media {
-        # Radarr
-        handle /radarr* {
-            reverse_proxy 192.168.178.100:7878
-        }
-        # Sonarr
-        handle /sonarr* {
-            reverse_proxy 192.168.178.100:8989
-        }
-        # Prowlarr
-        handle /prowlarr* {
-            reverse_proxy 192.168.178.100:9696
-        }
-        # Bazarr
-        handle /bazarr* {
-            reverse_proxy 192.168.178.100:6767
-        }
-        handle {
-            reverse_proxy 192.168.178.100:8096
-        }
+        handle /radarr* { reverse_proxy 192.168.178.100:7878 }
+        handle /sonarr* { reverse_proxy 192.168.178.100:8989 }
+        handle /bazarr* { reverse_proxy 192.168.178.100:6767 }
+        handle /prowlarr* { reverse_proxy 192.168.178.100:9696 }
+        handle { reverse_proxy 192.168.178.100:8096 }
     }
 
-    handle @codeserver {
-        reverse_proxy 192.168.178.100:8680
-    }
+    handle @codeserver { reverse_proxy 192.168.178.100:8680 }
+    handle @seafile { reverse_proxy 192.168.178.100:8082 }
 
+    # --- Bij een fout subdomein --- #
     handle {
         abort
     }
