@@ -1,0 +1,52 @@
+services:
+
+  docmost:
+    image: docmost/docmost:latest
+    container_name: docmost
+    depends_on:
+      - db
+      - redis
+    environment:
+      - APP_URL=https://docs.dinandos.duckdns.org
+      - APP_SECRET=SecureSecretKeySecureSecretKey12 # <-- change
+      - DATABASE_URL=postgresql://docmost:STRONG_DB_PASSWORD@db:5432/docmost?schema=public # <-- change
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    restart: unless-stopped
+    volumes:
+      - /opt/docmost/storage:/app/data/storage
+    networks:
+      - proxy
+  
+  db:
+    image: postgres:16-alpine
+    container_name: docmost-db
+    environment:
+      - POSTGRES_DB=docmost
+      - POSTGRES_USER=docmost
+      - POSTGRES_PASSWORD=STRONG_DB_PASSWORD # <-- change
+    restart: unless-stopped
+    expose:
+      - 5432
+    volumes:
+      - /opt/docmost/database:/var/lib/postgresql/data
+    networks:
+      - proxy
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: docmost-redis
+    restart: unless-stopped
+    expose:
+      - 6379
+    volumes:
+      - /opt/docmost/redis:/data
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

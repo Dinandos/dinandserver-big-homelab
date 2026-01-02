@@ -1,0 +1,150 @@
+services:
+
+  prowlarr:
+    image: linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/prowlarr:/config
+    expose:
+      - 9696/tcp 
+    ports:
+      - 9696:9696/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/sonarr:/config
+      - /opt/arr-stack/data:/media
+    expose:
+      - 8989/tcp
+    ports:
+      - 8989:8989/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+    
+  radarr:
+    image: linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/radarr:/config
+      - /opt/arr-stack/data:/media
+    expose:
+      - 7878/tcp
+    ports:
+      - 7878:7878/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+
+  readarr:
+    image: linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/readarr:/config
+      - /opt/arr-stack/data:/media
+    expose:
+      - 8787/tcp
+    ports:
+      - 8787:8787/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/bazarr:/config
+      - /opt/arr-stack/data:/media
+    expose:
+      - 6767/tcp
+    ports:
+      - 6767:6767/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+    
+  flaresolverr:
+    image: flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=Europe/Amsterdam
+    expose:
+      - 8191/tcp
+    restart: unless-stopped
+    networks:
+      - proxy  
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:5.0.2-libtorrentv1
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+      - WEBUI_PORT=8080
+    volumes:
+      - /opt/arr-stack/qbittorrent:/config
+      - /opt/arr-stack/data/downloads:/media/downloads
+    restart: unless-stopped
+    expose:
+      - 8080/tcp
+      - 6881/tcp
+      - 6881/udp
+    ports:
+      - 8081:8080/tcp
+      - 6881:6881/tcp
+      - 6881:6881/udp
+    networks:
+      - proxy
+
+  emby:
+    image: linuxserver/emby:latest
+    container_name: emby
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /opt/arr-stack/emby:/config
+      - /opt/arr-stack/data:/data
+    expose:
+      - 8096/tcp 
+      - 8920/tcp
+    ports:
+      - 8096:8096/tcp
+    restart: unless-stopped
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

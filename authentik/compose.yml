@@ -11,7 +11,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - ${DOCKER_VOLUME_STORAGE}/authentik/psql:/var/lib/postgresql/data
+      - /opt/authentik/psql:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS}
       POSTGRES_USER: ${PG_USER}
@@ -33,11 +33,11 @@ services:
       retries: 5
       timeout: 3s
     volumes:
-      - ${DOCKER_VOLUME_STORAGE}/authentik/redis:/data
+      - /opt/authentik/redis:/data
     networks:
       - authentik-internal
 
-  authentik-proxy:
+  authentik:
     image: ghcr.io/goauthentik/server:${AUTHENTIK_VERSION}
     container_name: authentik
     restart: unless-stopped
@@ -50,11 +50,11 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
     volumes:
-      - ${DOCKER_VOLUME_STORAGE}/authentik/media:/media
-      - ${DOCKER_VOLUME_STORAGE}/authentik/custom-templates:/templates
+      - /opt/authentik/media:/media
+      - /opt/authentik/custom-templates:/templates
     ports:
-      - 9000:9000/tcp # http
-      - 9443:9443/tcp # https
+      - 9000:9000/tcp # HTTP
+      - 9443:9443/tcp # HTTPS
     expose:
       - 9000
       - 9443
@@ -65,6 +65,7 @@ services:
       - redis
     networks:
       - authentik-internal
+      - proxy
    
   worker:
     image: ghcr.io/goauthentik/server:${AUTHENTIK_VERSION}
@@ -80,9 +81,9 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
     volumes:
-      - ${DOCKER_VOLUME_STORAGE}/authentik/certs:/certs
-      - ${DOCKER_VOLUME_STORAGE}/authentik/media:/media
-      - ${DOCKER_VOLUME_STORAGE}/authentik/custom-templates:/templates
+      - /opt/authentik/certs:/certs
+      - /opt/authentik/media:/media
+      - /opt/authentik/custom-templates:/templates
     env_file:
       - .env
     depends_on:
@@ -94,3 +95,5 @@ services:
 networks:
   authentik-internal:
     internal: true
+  proxy:
+    external: true
