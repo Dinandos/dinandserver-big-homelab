@@ -5,11 +5,13 @@ services:
     container_name: gitea
     restart: unless-stopped
     hostname: gitea
+    environment:
+      - GITEA_SSH_PORT=2221
     env_file:
       - ./.env
     ports:
-      - 3001:3000 #webgui
-      - 2221:22 #ssh
+      - 3001:3000 
+      - 2221:22 
     expose:
       - 3000
       - 22
@@ -24,11 +26,10 @@ services:
     restart: unless-stopped
     environment:
       GITEA_INSTANCE_URL=${INSTANCE_URL}
-      GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
       GITEA_RUNNER_NAME=${RUNNER_NAME}
-      GITEA_RUNNER_LABELS=${RUNNER_LABELS}
+      GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
     volumes:
-      - /opt/gitea/runner/data:/data
+      - /opt/gitea/runner:/data
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - gitea
