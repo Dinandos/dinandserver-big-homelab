@@ -17,7 +17,7 @@ services:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_DB: ${PG_DB}
     env_file:
-      - .env
+      - ./.env
     networks:
       - authentik-internal
 
@@ -59,7 +59,7 @@ services:
       - 9000
       - 9443
     env_file:
-      - .env
+      - ./.env
     depends_on:
       - postgresql
       - redis
@@ -85,7 +85,7 @@ services:
       - /opt/authentik/media:/media
       - /opt/authentik/custom-templates:/templates
     env_file:
-      - .env
+      - ./.env
     depends_on:
       - postgresql
       - redis

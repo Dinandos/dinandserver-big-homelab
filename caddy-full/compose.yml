@@ -3,7 +3,7 @@ services:
     build: .
     container_name: caddy-full
     restart: unless-stopped
-    env_file: ".env"
+    env_file: "./.env"
     environment:
       - DUCKDNS_TOKEN=${DUCKDNS_TOKEN}
     ports:

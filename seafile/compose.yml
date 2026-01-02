@@ -28,6 +28,8 @@ services:
       - 443
     volumes:
       - /opt/seafile/data:/shared
+    env_file:
+      - ./.env
     environment:
       - DB_HOST=db
       - DB_ROOT_PASSWD=${DB_ROOT_PASSWD}
