@@ -1,7 +1,7 @@
 ### Commands voor basis auth
 `docker exec -it caddy-full caddy hash-password --plaintext 'wachtwoord'`
 
-### Config settings
+### Config Options
 Kies 1 van de onderstaande configs voor de *handlers*.
 
 #### Optie 1: IP adressen
