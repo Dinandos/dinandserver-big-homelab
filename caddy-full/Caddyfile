@@ -53,10 +53,10 @@
     @docmost host docs.dinandos.duckdns.org
     @gitea host gitea.dinandos.duckdns.org
 
-    # --- PLAK HIER WELKE OPTIE JE WILT GEBRUIKEN --- #
+    # --- PLAK HIER WELKE OPTIE JE WILT GEBRUIKEN (zie HELP.md) --- #
     
     
-    # --- Bij een fout subdomein --- #
+    # --- Bij een fout subdomein --- # 
     handle {
         abort
     }
