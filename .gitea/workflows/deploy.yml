@@ -1,0 +1,25 @@
+name: "GitOps Deploy"
+on:
+  push:
+    branches: [server]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH naar Server
+        uses: https://github.com/appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: gitea_runner
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /opt/jouw-repo-map
+            sudo git fetch origin
+            sudo git reset --hard origin/server
+            # Zoek alle compose files en start ze
+            find . -maxdepth 2 -name "docker-compose.yml" -o -name "compose.yml" | while read file; do
+              dir=$(dirname "$file")
+              cd "$dir"
+              sudo docker compose up -d --remove-orphans
+              cd - > /dev/null
+            done

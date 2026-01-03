@@ -1,0 +1,16 @@
+name: "Maintenance"
+on:
+  schedule:
+    - cron: '0 3 * * 0'
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: gitea_runner
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker system prune -af
+            curl -vI https://dinandos.duckdns.org 2>&1 | grep "expire date"

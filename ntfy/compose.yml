@@ -1,0 +1,19 @@
+services:
+  ntfy:
+    image: binwiederhier/ntfy
+    container_name: ntfy
+    restart: unless-stopped
+    command:
+      - serve
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - 80:80
+    volumes:
+      - /opt/ntfy/config:/etc/ntfy
+      - /opt/ntfy/cache:/var/cache/ntfy
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true
