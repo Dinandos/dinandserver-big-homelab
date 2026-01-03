@@ -19,6 +19,7 @@ services:
     volumes:
       - /opt/docmost/storage:/app/data/storage
     networks:
+      - docmost-internal
       - proxy
   
   db:
@@ -34,7 +35,7 @@ services:
     volumes:
       - /opt/docmost/database:/var/lib/postgresql/data
     networks:
-      - proxy
+      - docmost-internal
 
   redis:
     image: redis:7.2-alpine
@@ -45,8 +46,10 @@ services:
     volumes:
       - /opt/docmost/redis:/data
     networks:
-      - proxy
+      - docmost-internal
 
 networks:
+  docmost-internal:
+    internal: true
   proxy:
     external: true
