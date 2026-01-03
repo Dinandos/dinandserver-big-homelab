@@ -14,7 +14,7 @@ jobs:
       - name: Run Backup Script
         run: |
           # Variabelen instellen
-          SOURCE_DIR="/opt/dinandos-homelab"
+          SOURCE_DIR="/opt"
           BACKUP_DIR="/backups"
           TIMESTAMP=$(date +%Y-%m-%d_%H-%M)
           FILENAME="homelab_backup_$TIMESTAMP.tar.gz"
