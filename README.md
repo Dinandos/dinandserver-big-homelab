@@ -1,12 +1,7 @@
-# Dinandos Homeserver
-In deze repository kan je alles vinden en soort van backups voor mijn homeserver. Iedereen mag dit gebruiken, maar voor de meeste heeft dit allemaal geen nut. Want de configuatie geldt alleen op mijn situatie's zoals "volumes"
-
-Dit is het ultieme, alles-in-één handboek voor jouw GitOps-setup. Je kunt deze volledige tekst kopiëren en opslaan als `README.md` in de hoofdmap van je Git-repository.
-
----
 
 # 🏗️ Homeserver GitOps & Automatisering Handboek
 
+In deze repository kan je alles vinden en soort van backups voor mijn homeserver. Iedereen mag dit gebruiken, maar voor de meeste heeft dit allemaal geen nut. Want de configuatie geldt alleen op mijn situatie's zoals "volumes"
 Dit document bevat de volledige blauwdruk van de server-architectuur. Het systeem is gebaseerd op het **GitOps Push-Model**, waarbij Gitea de "Source of Truth" is en wijzigingen automatisch naar de server worden uitgerold via een beveiligde runner-account.
 
 ---
