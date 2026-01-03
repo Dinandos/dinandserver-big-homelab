@@ -1,20 +1,36 @@
-name: "GitOps Deploy"
+name: "GitOps Deployment"
 on:
   push:
     branches: [server]
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: SSH naar Server
-        uses: https://github.com/appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: gitea_runner
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /opt/jouw-repo-map
-            sudo git fetch origin
-            sudo git reset --hard origin/server
-            sudo docker compose up -d --remove-orphans
-            echo "Deployment voltooid op $(date)"
+      - name: Remove Existing Compose File
+        run: |
+            cd /opt/dinandos-homelab
+            sudo rm compose.yml
+
+      - name: Build Compose File
+        run: |
+            cd /opt/dinandos-homelab
+            echo "name: homelab-stack" > compose.yml
+            echo "include:" >> compose.yml
+
+            find . -mindepth 2 \( -name "compose.yaml" -o -name "docker-compose.yml" \) | sed 's|^\./||' | while read -r path; do
+              echo "  - $path" >> compose.yml
+            done
+
+      - name: Deploy Compose Stack
+        run: |
+            cd /opt/dinandos-homelab
+            sudo docker compose -f compose.yml up -d --remove-orphans
+
+      - name: Success Notification
+        if: success()
+        run: echo "Deployment succesvol voltooid."
+
+      - name: Failure Notification
+        if: failure()
+        run: echo "Deployment gefaald. Controleer de runner logs."

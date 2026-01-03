@@ -1,16 +1,32 @@
-name: "Maintenance"
+name: "Nightly Backup"
 on:
   schedule:
-    - cron: '0 3 * * 0'
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
 jobs:
-  maintenance:
-    runs-on: ubuntu-latest
+  backup:
+    runs-on: self-hosted
     steps:
-      - uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: gitea_runner
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo docker system prune -af
-            curl -vI https://dinandos.duckdns.org 2>&1 | grep "expire date"
+      - name: Create Backup Directory
+        run: sudo mkdir -p /backups
+
+      - name: Run Backup Script
+        run: |
+          # Variabelen instellen
+          SOURCE_DIR="/opt/dinandos-homelab"
+          BACKUP_DIR="/backups"
+          TIMESTAMP=$(date +%Y-%m-%d_%H-%M)
+          FILENAME="homelab_backup_$TIMESTAMP.tar.gz"
+
+          echo "Start backup van $SOURCE_DIR..."
+
+          sudo tar -czf $BACKUP_DIR/$FILENAME $SOURCE_DIR
+
+          echo "Backup opgeslagen als: $BACKUP_DIR/$FILENAME"
+
+      - name: Cleanup Old Backups
+        run: |
+          echo "Oude backups opruimen..."
+          sudo find /backups -name "homelab_backup_*.tar.gz" -mtime +14 -delete
+          echo "Opruimen voltooid."
