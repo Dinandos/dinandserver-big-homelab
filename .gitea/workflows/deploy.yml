@@ -16,10 +16,5 @@ jobs:
             cd /opt/jouw-repo-map
             sudo git fetch origin
             sudo git reset --hard origin/server
-            # Zoek alle compose files en start ze
-            find . -maxdepth 2 -name "docker-compose.yml" -o -name "compose.yml" | while read file; do
-              dir=$(dirname "$file")
-              cd "$dir"
-              sudo docker compose up -d --remove-orphans
-              cd - > /dev/null
-            done
+            sudo docker compose up -d --remove-orphans
+            echo "Deployment voltooid op $(date)"
