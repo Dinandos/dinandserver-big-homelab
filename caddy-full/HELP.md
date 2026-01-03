@@ -4,9 +4,8 @@
 ### Config settings
 Kies 1 van de onderstaande configs voor de *handlers*.
 
-#### Optie 1
-```    # --- IP adressen HANDLERS --- #
-    handle @media {
+#### Optie 1 IP adressen
+``` handle @media {
         handle /radarr* { reverse_proxy 192.168.178.100:7878 }
         handle /sonarr* { reverse_proxy 192.168.178.100:8989 }
         handle /bazarr* { reverse_proxy 192.168.178.100:6767 }
@@ -21,9 +20,8 @@ Kies 1 van de onderstaande configs voor de *handlers*.
     handle @gitea { reverse_proxy 192.168.178.100:3001 }
 ```
 
-#### Optie 2
-```    # --- Container voor de services (proxy netwerk) --- #
-    handle @media {
+#### Optie 2 Container voor de services (proxy netwerk)
+``` handle @media {
         handle /radarr* { reverse_proxy radarr:7878 }
         handle /sonarr* { reverse_proxy sonarr:8989 }
         handle /bazarr* { reverse_proxy bazarr:6767 }
