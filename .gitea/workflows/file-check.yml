@@ -1,12 +1,22 @@
-name: "Caddy Validation"
+name: "File Configuration Check"
 on: [push]
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
+      - name: Clone Repository
       - uses: actions/checkout@v4
-      - name: Validate Caddyfile
+      - with:
+          path: /tmp/dinandos-homelab
+          clean: false
+      
+      - name: Verifing Configuration Files
         run: |
-          docker run --rm \
-            -v $(pwd)/caddy-full:/etc/caddy \
-            caddy:latest caddy validate --adapter caddyfile --config /etc/caddy/Caddyfile
+            cd /tmp/dinandos-homelab/scripts
+            sudo chmod +x ./verify-configs.sh
+
+            cd ..
+            ./verify-configs.sh
+
+      - name: Cleanup Cloned Repository
+        run: sudo rm -rf /tmp/dinandos-homelab

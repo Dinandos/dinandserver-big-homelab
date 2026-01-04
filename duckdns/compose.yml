@@ -1,0 +1,12 @@
+services:
+
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Amsterdam
+      - SUBDOMAINS=dinandos
+      - TOKEN=your-duckdns-token
+      - UPDATE_IP=ipv4
+      - LOG_FILE=true
