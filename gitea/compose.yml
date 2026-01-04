@@ -25,9 +25,9 @@ services:
     container_name: gitea-runner
     restart: unless-stopped
     environment:
-      GITEA_INSTANCE_URL=${INSTANCE_URL}
-      GITEA_RUNNER_NAME=${RUNNER_NAME}
-      GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
+      - GITEA_INSTANCE_URL=${INSTANCE_URL}
+      - GITEA_RUNNER_NAME=${RUNNER_NAME}
+      - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
     volumes:
       - /opt/gitea/runner:/data
       - /opt:/opt
