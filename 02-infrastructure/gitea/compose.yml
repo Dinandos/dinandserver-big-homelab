@@ -16,7 +16,7 @@ services:
       - 3000
       - 22
     volumes:
-      - /opt/gitea:/data
+      - ./gitea:/data
     networks:
       - proxy
 
@@ -29,8 +29,8 @@ services:
       - GITEA_RUNNER_NAME=${RUNNER_NAME}
       - GITEA_RUNNER_REGISTRATION_TOKEN=${REGISTRATION_TOKEN}
     volumes:
-      - /opt/gitea/runner:/data
-      - /opt:/opt
+      - ./runner:/data
+      - /homelab:/homelab
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - gitea

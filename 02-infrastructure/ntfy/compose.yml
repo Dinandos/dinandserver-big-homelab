@@ -10,8 +10,8 @@ services:
     ports:
       - 80:80
     volumes:
-      - /opt/ntfy/config:/etc/ntfy
-      - /opt/ntfy/cache:/var/cache/ntfy
+      - ./config:/etc/ntfy
+      - ./cache:/var/cache/ntfy
     networks:
       - proxy
 networks:

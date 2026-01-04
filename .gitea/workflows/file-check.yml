@@ -5,8 +5,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Clone Repository
-      - uses: actions/checkout@v4
-      - with:
+        uses: actions/checkout@v4
+        with:
           path: /tmp/dinandos-homelab
           clean: false
       

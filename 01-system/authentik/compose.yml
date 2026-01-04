@@ -11,7 +11,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - /opt/authentik/psql:/var/lib/postgresql/data
+      - ./data/psql:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS}
       POSTGRES_USER: ${PG_USER}
@@ -33,7 +33,7 @@ services:
       retries: 5
       timeout: 3s
     volumes:
-      - /opt/authentik/redis:/data
+      - ./data/redis:/data
     networks:
       - authentik-internal
 
@@ -50,8 +50,8 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
     volumes:
-      - /opt/authentik/media:/media
-      - /opt/authentik/custom-templates:/templates
+      - ./data/media:/media
+      - ./data/custom-templates:/templates
     ports:
       - 9000:9000/tcp # HTTP
       - 9443:9443/tcp # HTTPS
@@ -81,9 +81,9 @@ services:
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
     volumes:
-      - /opt/authentik/certs:/certs
-      - /opt/authentik/media:/media
-      - /opt/authentik/custom-templates:/templates
+      - ./data/certs:/certs
+      - ./data/media:/media
+      - ./data/custom-templates:/templates
     env_file:
       - ./.env
     depends_on:

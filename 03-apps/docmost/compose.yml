@@ -17,7 +17,7 @@ services:
       - 3000
     restart: unless-stopped
     volumes:
-      - /opt/docmost/storage:/app/data/storage
+      - ./storage:/app/data/storage
     networks:
       - docmost-internal
       - proxy
@@ -33,7 +33,7 @@ services:
     expose:
       - 5432
     volumes:
-      - /opt/docmost/database:/var/lib/postgresql/data
+      - ./database:/var/lib/postgresql/data
     networks:
       - docmost-internal
 
@@ -44,7 +44,7 @@ services:
     expose:
       - 6379
     volumes:
-      - /opt/docmost/redis:/data
+      - ./redis:/data
     networks:
       - docmost-internal
 

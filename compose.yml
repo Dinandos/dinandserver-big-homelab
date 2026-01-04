@@ -1,9 +1,0 @@
-include:
-  - arr-stack/compose.yaml
-  - authentik/compose.yaml
-  - caddy-full/compose.yaml
-  - docmost/compose.yaml
-  - gitea/compose.yaml
-  - ntfy/compose.yaml
-  - seafile/compose.yaml
-  - duckdns/compose.yaml

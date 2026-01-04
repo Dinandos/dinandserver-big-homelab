@@ -1,7 +1,10 @@
 **/data/
 **/db/
 **/database/
+**/storage/
+**/redis/
 **/config/
+**/cache/
 **/logs/
 *.env
 *.log

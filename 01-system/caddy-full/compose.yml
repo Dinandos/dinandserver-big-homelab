@@ -14,10 +14,10 @@ services:
       - "19132:19132/udp" # Bedrock MC Server
       - "24454:24454/udp" # Voice chat MC Server
     volumes:
-      - /opt/caddy-full/Caddyfile:/etc/caddy/Caddyfile
-      - /opt/caddy-full/data:/data
-      - /opt/caddy-full/config:/config
-      - /opt/caddy-full/logs:/var/log/caddy
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./data:/data
+      - ./config:/config
+      - ./logs:/var/log/caddy
     networks:
       - proxy
 networks:

@@ -8,7 +8,7 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/prowlarr:/config
+      - ./prowlarr:/config
     expose:
       - 9696/tcp 
     ports:
@@ -25,8 +25,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/sonarr:/config
-      - /opt/arr-stack/data:/media
+      - ./sonarr:/config
+      - ./data:/media
     expose:
       - 8989/tcp
     ports:
@@ -43,8 +43,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/radarr:/config
-      - /opt/arr-stack/data:/media
+      - ./radarr:/config
+      - ./data:/media
     expose:
       - 7878/tcp
     ports:
@@ -61,8 +61,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/readarr:/config
-      - /opt/arr-stack/data:/media
+      - ./readarr:/config
+      - ./data:/media
     expose:
       - 8787/tcp
     ports:
@@ -79,8 +79,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/bazarr:/config
-      - /opt/arr-stack/data:/media
+      - ./bazarr:/config
+      - ./data:/media
     expose:
       - 6767/tcp
     ports:
@@ -112,8 +112,8 @@ services:
       - TZ=Europe/Amsterdam
       - WEBUI_PORT=8080
     volumes:
-      - /opt/arr-stack/qbittorrent:/config
-      - /opt/arr-stack/data/downloads:/media/downloads
+      - ./qbittorrent:/config
+      - ./data/downloads:/media/downloads
     restart: unless-stopped
     expose:
       - 8080/tcp
@@ -134,8 +134,8 @@ services:
       - PGID=1000
       - TZ=Europe/Amsterdam
     volumes:
-      - /opt/arr-stack/emby:/config
-      - /opt/arr-stack/data:/data
+      - ./emby:/config
+      - ./data:/data
     expose:
       - 8096/tcp 
       - 8920/tcp
